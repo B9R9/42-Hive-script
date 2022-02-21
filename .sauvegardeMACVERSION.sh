@@ -4,7 +4,7 @@ delete_olderfolder()
 {
 	filenumber=$(find /Users/briffard/sauvegarde -maxdepth 1 -type d | grep -v .git | wc -l)
 	if [ $filenumber > 2 ]; then
-		olderfolder=$(stat -f "%Sm %N" /Users/briffard/sauvegarde/* | sort -n | grep -v .git | awk '{prnit $6}' | sed -n '1p')
+		olderfolder=$(stat -f "%Sm %N" /Users/briffard/sauvegarde/* | sort -n | grep -v .git | awk '{print $6}' | sed -n '1p')
 #find /home/chopper/sauvegarde -maxdepth 1 -type d -exec stat --format="%y %b %n" {} \; | grep -v .git | sort | awk '{print$5}' | sed -n '1p'
 		rm -rf $olderfolder
 	fi
