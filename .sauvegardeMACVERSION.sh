@@ -4,7 +4,7 @@ delete_olderfolder()
 {
 	filenumber=$(find /Users/briffard/sauvegarde -maxdepth 1 -type d | grep -v .git | wc -l)
 	if [ $filenumber > 2 ]; then
-		olderfolder=$(stat -f "%Sm %N" /Users/briffard/sauvegarde/*/ | sort -n | grep -v .git | awk '{prnit $6}' | sed -n '1p')
+		olderfolder=$(stat -f "%Sm %N" /Users/briffard/sauvegarde/* | sort -n | grep -v .git | awk '{prnit $6}' | sed -n '1p')
 #find /home/chopper/sauvegarde -maxdepth 1 -type d -exec stat --format="%y %b %n" {} \; | grep -v .git | sort | awk '{print$5}' | sed -n '1p'
 		rm -rf $olderfolder
 	fi
@@ -16,10 +16,10 @@ backup_local()
 		git clone git@github.com:B9R9/backup /Users/briffard/sauvegarde
 		touch /Users/briffard/sauvegarde/backup.log
 	fi
-	for line in $(find /Users/briffard/Desktop -type f -mmin 120 |  grep -v .git)
+	for line in $(find /Users/briffard/Desktop/* -type f -mmin -60 |  grep -v .git)
 	do
 		echo $line
-		subfolder=$(date)
+		subfolder="Backuptime:$(date +%H:%M:%S)"
 		folder=$(date +%d%b%g)
 		if [ ! -e /Users/briffard/sauvegarde/"$folder" ]; then
 			mkdir /Users/briffard/sauvegarde/"$folder"
